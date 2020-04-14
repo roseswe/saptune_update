@@ -8,6 +8,7 @@
 # rr, 12.11.2019 - many fixes around CSI output etc. Sanity checks
 # rr, 18.11.2019 - CVS keywords, beautified the source
 # rr, 18.02.2020 - workaround for corrupted SAPTUNE_VERSION= in /etc/sysconfig/saptune
+# rr, 14.02.2020 - workaround for bug with /var/lib/saptune/saved_state files added
 # ---------------------------------------------------------------------------
 
 export LANG=posix
@@ -42,6 +43,7 @@ done
 
 sed 's/SAPTUNE_VERSION="1"/SAPTUNE_VERSION="2"/' /etc/sysconfig/saptune > $TMPFILE
 mv -f $TMPFILE /etc/sysconfig/saptune   ## -rw-r--r--, 644
+rm -f /var/lib/saptune/saved_state/*    ## not sure if this needs to be applied before or after the migration!
 chmod 644 /etc/sysconfig/saptune        ## rpm -V, chkstat(8)
 
 echo "### Please check if the following variables in /etc/sysconfig/saptune are empty and SAPTUNE_VERSION=2 is set"
