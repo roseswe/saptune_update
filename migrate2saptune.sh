@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.5 2020/02/20 20:33:03 ralph Exp $
+# $Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.7 2020/04/14 11:12:14 ralph Exp $
 # (c) 2019-2020 by Ralph Roth, ROSE SWE
 # ---------------------------------------------------------------------------
 # This script tries to migrate a host running saptune v1 to saptune v2, see:
@@ -8,7 +8,7 @@
 # rr, 12.11.2019 - many fixes around CSI output etc. Sanity checks
 # rr, 18.11.2019 - CVS keywords, beautified the source
 # rr, 18.02.2020 - workaround for corrupted SAPTUNE_VERSION= in /etc/sysconfig/saptune
-# rr, 14.02.2020 - workaround for bug with /var/lib/saptune/saved_state files added
+# rr, 14.04.2020 - workaround for bug with /var/lib/saptune/saved_state files added
 # ---------------------------------------------------------------------------
 
 export LANG=posix
