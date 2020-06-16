@@ -6,7 +6,9 @@ This script was tested on different environments in Europe and Asia.
 
 ## Updates
 
-- 14. Apr. 2020 - Workaround for saved_state bug added
+* 14. April 2020 - Workaround for saved_state bug added
+
+* 16. June 2020 - additional tuned daemon restart added (see below)
 
 ## ToDo/Open
 
