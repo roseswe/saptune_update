@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.7 2020/04/14 11:12:14 ralph Exp $
+# $Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.8 2020/06/16 15:57:28 ralph Exp $
 # (c) 2019-2020 by Ralph Roth, ROSE SWE
 # ---------------------------------------------------------------------------
 # This script tries to migrate a host running saptune v1 to saptune v2, see:
@@ -9,6 +9,7 @@
 # rr, 18.11.2019 - CVS keywords, beautified the source
 # rr, 18.02.2020 - workaround for corrupted SAPTUNE_VERSION= in /etc/sysconfig/saptune
 # rr, 14.04.2020 - workaround for bug with /var/lib/saptune/saved_state files added
+# rr, 16.06.2020 - added feedback from the SUSE SAP LinuxLab
 # ---------------------------------------------------------------------------
 
 export LANG=posix
@@ -61,7 +62,12 @@ rm -rf /var/log/saptune/
 grep -v " nofile " /etc/security/limits.conf > $TMPFILE
 mv -f $TMPFILE /etc/security/limits.conf
 
+## Please be aware, that tuned gets removed from sapconf and saptune with one of the next updates
 systemctl restart tuned.service || echo "#####  ---  ERROR restarting tuned  ---  #####"
+## be compatible with v3 and v4
+saptune daemon stop
+sync
+saptune daemon start
 
 # sanity, seen on a few hosts, not sure if this is a bug of 2.0.1-3.16.1, saptune-2.0.2-3.21.1.x86_64
 grep -q "SAPTUNE_VERSION=" /etc/sysconfig/saptune || echo 'SAPTUNE_VERSION="2"' >> /etc/sysconfig/saptune
