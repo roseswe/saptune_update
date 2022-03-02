@@ -1,6 +1,6 @@
 #!/bin/bash
-# $Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.8 2020/06/16 15:57:28 ralph Exp $
-# (c) 2019-2020 by Ralph Roth, ROSE SWE
+# @(#)$Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.8 2020/06/16 15:57:28 ralph Exp $
+# (c) 2019-2022 by Ralph Roth, ROSE SWE
 # ---------------------------------------------------------------------------
 # This script tries to migrate a host running saptune v1 to saptune v2, see:
 #      man 7 saptune
@@ -26,12 +26,13 @@ TMPFILE=$(mktemp)
 # we need this information later to apply them again
 # the perl stuff is a workaround to get rid off ANSI escape sequences (CSI codes)
 SOLUTION=$(saptune solution list 2> /dev/null | perl -pe 's/\e\[[0-9;]*m(?:\e\[K)?//g' | awk ' {if ($1 == "*" ) print $2;} ')
+# or in sed:  sed -r 's/'$(echo -e "\033")'\[[0-9]{1,2}(;([0-9]{1,2})?)?[mK]//g' | tee /tmp/script_outputfile.txt
 
 # ---------------------------------------------------------------------------
 
 for f in ${SOLUTION}
 do
-    saptune solution revert $f 2>/dev/null
+    saptune solution revert ${f} 2>/dev/null
 done
 
 # works as long as there is no override file in place
@@ -39,10 +40,10 @@ NOTES=$(saptune note list 2> /dev/null | perl -pe 's/\e\[[0-9;]*m(?:\e\[K)?//g' 
 
 for f in ${NOTES}
 do
-    saptune note revert $f 2>/dev/null
+    saptune note revert ${f} 2>/dev/null
 done
 
-sed 's/SAPTUNE_VERSION="1"/SAPTUNE_VERSION="2"/' /etc/sysconfig/saptune > $TMPFILE
+sed 's/SAPTUNE_VERSION="1"/SAPTUNE_VERSION="2"/' /etc/sysconfig/saptune > "$TMPFILE"
 mv -f $TMPFILE /etc/sysconfig/saptune   ## -rw-r--r--, 644
 rm -f /var/lib/saptune/saved_state/*    ## not sure if this needs to be applied before or after the migration!
 chmod 644 /etc/sysconfig/saptune        ## rpm -V, chkstat(8)
