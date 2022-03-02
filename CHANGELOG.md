@@ -2,6 +2,22 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+
+Changes
+~~~~~~~
+- Started with fixing shellcheck errors. [roseswe]
+
+
+1.8.0 (2020-06-16)
+------------------
+- Updated history. [roseswe]
+- Add: restart of the tuned daemon via saptune. [roseswe]
+- Added feedback from LinuxLabs. [roseswe]
+- Add: CHANGELOG.md. [roseswe]
+
+
 1.7.0 (2020-05-29)
 ------------------
 
