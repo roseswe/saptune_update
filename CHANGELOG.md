@@ -7,6 +7,9 @@ Changelog
 
 Changes
 ~~~~~~~
+- Small ShellCheck fixes, added notes for possible saptune v3 migration.
+  [roseswe]
+- Updated the ChnageLog. [roseswe]
 - Started with fixing shellcheck errors. [roseswe]
 
 
