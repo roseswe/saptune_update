@@ -2,6 +2,8 @@
 
 Shellscript 'migrate2saptune.sh' to update SLES-for-SAP saptune v1 installation to the new saptune v2 layout.  This script tries to migrate a host running saptune v1 to saptune v2, see:  man 7 saptune
 
+This is not designed for modern saptune Version 3.x environments!
+
 This script was tested on different environments in Europe and Asia.
 
 ## Updates
@@ -21,5 +23,17 @@ It would be better if you use the commands
 
 instead of restarting tuned directly to be compatible with the change.
 
-Also there will be a v3 (this year?) and maybe v4, etc.
+Also there will be a v3 (this year) and maybe v4, etc.
 You should at least have a test to exit if a version > 2 has been found.
+
+saptune 3.1 = Winter 2023
+
+This script might be able also to do an upgrade from saptune v1 to saptune v3.x
+
+We tried this by hand with uninstalling saptune, do a manual cleanup of the config files and then a
+
+    systemctl disable --now tuned
+    zypper install saptune ....
+    saptune solution apply ....
+    saptune service takeover ....
+

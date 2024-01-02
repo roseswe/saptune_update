@@ -1,6 +1,6 @@
 #!/bin/bash
 # @(#)$Header: /home/cvs/AddSourceCode/suse/sap/migrate2saptune.sh,v 1.8 2020/06/16 15:57:28 ralph Exp $
-# (c) 2019-2022 by Ralph Roth, ROSE SWE
+# (c) 2019-2024 by Ralph Roth, ROSE SWE
 # ---------------------------------------------------------------------------
 # This script tries to migrate a host running saptune v1 to saptune v2, see:
 #      man 7 saptune
@@ -10,6 +10,7 @@
 # rr, 18.02.2020 - workaround for corrupted SAPTUNE_VERSION= in /etc/sysconfig/saptune
 # rr, 14.04.2020 - workaround for bug with /var/lib/saptune/saved_state files added
 # rr, 16.06.2020 - added feedback from the SUSE SAP LinuxLab
+# rr, 02.01.2024 - shellcheck lints, checked with an saptune v1 installation on a v3 environment
 # ---------------------------------------------------------------------------
 
 export LANG=posix
@@ -49,7 +50,7 @@ rm -f /var/lib/saptune/saved_state/*    ## not sure if this needs to be applied 
 chmod 644 /etc/sysconfig/saptune        ## rpm -V, chkstat(8)
 
 echo "### Please check if the following variables in /etc/sysconfig/saptune are empty and SAPTUNE_VERSION=2 is set"
-egrep -v "^#|^$" /etc/sysconfig/saptune
+grep -v -E "^#|^$" /etc/sysconfig/saptune
 
 echo "### Config files cleanup..."
 
@@ -58,6 +59,7 @@ rm -f /etc/tuned/saptune/*
 rm -f /etc/sysconfig/saptune-note-*
 rm -f /etc/systemd/logind.conf.d/sap.conf
 rm -rf /var/log/saptune/
+rm -f /etc/sysconfig/saptune.rpmsave  ## 02012024,rr
 
 ## may not work - Puppet needs to be fixed?
 grep -v " nofile " /etc/security/limits.conf > $TMPFILE
@@ -79,9 +81,9 @@ grep -q "SAPTUNE_VERSION=" /etc/sysconfig/saptune || echo 'SAPTUNE_VERSION="2"' 
 
 for f in ${SOLUTION}
 do
-    echo "#### Solution: $f"
-    saptune solution apply $f 2>/dev/null
-    saptune solution verify $f
+    echo "#### Solution: ${f}"
+    saptune solution apply ${f} 2>/dev/null
+    saptune solution verify ${f}
 done
 
 for f in ${NOTES}
