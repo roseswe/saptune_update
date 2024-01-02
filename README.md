@@ -26,6 +26,8 @@ instead of restarting tuned directly to be compatible with the change.
 Also there will be a v3 (this year) and maybe v4, etc.
 You should at least have a test to exit if a version > 2 has been found.
 
+### Possible saptune v1 to saptune v3 migration ...
+
 saptune 3.1 = Winter 2023
 
 This script might be able also to do an upgrade from saptune v1 to saptune v3.x

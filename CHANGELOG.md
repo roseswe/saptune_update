@@ -2,15 +2,20 @@ Changelog
 =========
 
 
-(unreleased)
-------------
+1.8.1 (2024-01-02)
+------------------
 
 Changes
 ~~~~~~~
+- Updated Changelog (by Makefile), Version: [roseswe]
 - Small ShellCheck fixes, added notes for possible saptune v3 migration.
   [roseswe]
 - Updated the ChnageLog. [roseswe]
 - Started with fixing shellcheck errors. [roseswe]
+
+Other
+~~~~~
+- Upd: Changelog. [roseswe]
 
 
 1.8.0 (2020-06-16)
